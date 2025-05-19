@@ -271,6 +271,15 @@ st.caption(f"Total Techs: {tech_count} | Blended Rate: ${blended_rate:.2f}/hr | 
 colL, colR = st.columns(2)
 with colL:
     st.write(f"Total Walls SqFt: {sqft_walls:,.0f}")
+
+    with st.expander("📐 Wall SqFt Breakdown"):
+        wall_perimeter = front + back + left + right
+        total_height = stories * height
+        st.markdown(f"""
+        - **Wall Perimeter** = {front} + {back} + {left} + {right} = **{wall_perimeter} ft**  
+        - **Total Height** = {stories} × {height} = **{total_height} ft**  
+        - **Wall SqFt** = {wall_perimeter} × {total_height} = **{sqft_walls:,.0f} sqft**
+        """)
     ...
 with colR:
     st.write(f"Cleaning Time (hrs): {clean_hours:.2f}")
@@ -366,6 +375,19 @@ elif job_type == "HOA Community":
     st.success("Provide options for common areas and resident notices. Offer bundling incentives for multiple buildings.")
 elif job_type == "Parking Garage":
     st.warning("Be clear about stain removal limits. Quote for rinse-downs and dust control, not deep degreasing.")
+
+# Optional video for selected job type
+video_links = {
+    "Apartment Complex": "https://youtu.be/apartment_video_link",
+    "Casino": "https://youtu.be/casino_video_link",
+    "Retail Strip Mall": "https://youtu.be/retail_video_link",
+    "Office Building": "https://youtu.be/office_video_link",
+    "HOA Community": "https://youtu.be/hoa_video_link",
+    "Parking Garage": "https://youtu.be/eOawmJEGJk8"
+}
+
+if job_type in video_links:
+    st.markdown(f"🎥 [Watch Brian Jr explain this job type]({video_links[job_type]})")
 
 # --- CHECKLIST ---
 st.header("📋 On-Site Checklist & Scope Notes")
