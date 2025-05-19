@@ -238,21 +238,26 @@ comp_adv = st.selectbox("📈 Competitive Advantage %", [0, 5, 10, 15, 20])
 
 # --- MODEL A: Daily Revenue ---
 totalA = target_daily * trucks_input * days
-fuelA = totalA * (fuel_pct := 0.04)
-chemA = totalA * (chem_pct := 0.05)
-mktA = totalA * (mkt_pct := 0.05)
-royaltyA = totalA * (royalty_pct := 0.10)
-costA = labor_cost + fuelA + chemA + mktA + royaltyA
+
+fuelA = totalA * fuel_pct
+chemA = totalA * chem_pct
+mktA = totalA * mkt_pct
+royaltyA = totalA * royalty_pct
+
+costA = labor_cost + fuelA + chemA + mktA + royaltyA + lift_cost
 profitA = totalA - costA
 marginA = (profitA / totalA) * 100
 
 # --- MODEL B: Hourly Target ---
 grossB = usable_total_hours * target_hourly
 finalB = grossB * (1 + comp_adv / 100)
-fuelB = finalB * (fuel_pct)
-chemB = finalB * (chem_pct)
-mktB = finalB * (mkt_pct)
-costB = labor_cost + fuelB + chemB + mktB
+
+fuelB = finalB * fuel_pct
+chemB = finalB * chem_pct
+mktB = finalB * mkt_pct
+royaltyB = finalB * royalty_pct
+
+costB = labor_cost + fuelB + chemB + mktB + royaltyB + lift_cost
 net_profit = finalB - costB
 net_margin = (net_profit / finalB) * 100
 net_per_day = net_profit / days
@@ -283,6 +288,8 @@ with st.expander("💡 Cost Breakdown - Model A"):
     st.write(f"Chemicals ({chem_pct*100:.0f}%): ${chemA:,.2f}")
     st.write(f"Marketing ({mkt_pct*100:.0f}%): ${mktA:,.2f}")
     st.write(f"Royalty ({royalty_pct*100:.0f}%): ${royaltyA:,.2f}")
+    st.write(f"Lift/Drone Cost: ${lift_cost:,.2f}")
+
 
 st.subheader("Model B: Hourly Target")
 st.write(f"Final Adjusted Price: ${finalB:,.2f}")
@@ -295,6 +302,9 @@ with st.expander("💡 Cost Breakdown - Model B"):
     st.write(f"Fuel ({fuel_pct*100:.0f}%): ${fuelB:,.2f}")
     st.write(f"Chemicals ({chem_pct*100:.0f}%): ${chemB:,.2f}")
     st.write(f"Marketing ({mkt_pct*100:.0f}%): ${mktB:,.2f}")
+    st.write(f"Royalty ({royalty_pct*100:.0f}%): ${royaltyB:,.2f}")
+    st.write(f"Lift/Drone Cost: ${lift_cost:,.2f}")
+
 
 # --- CHEMICAL RECOMMENDATIONS ---
 st.header("🧪 Recommended Chemicals by Surface")
